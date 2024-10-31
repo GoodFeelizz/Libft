@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-int	ft_count_word(char const *s, char c)
+static int	ft_count_word(char const *s, char c)
 {
 	int	i;
 	int	count;
@@ -31,7 +31,7 @@ int	ft_count_word(char const *s, char c)
 	return (count);
 }
 
-int	count_char_word(char const *s, char c)
+static int	count_char_word(char const *s, char c)
 {
 	int	i;
 
@@ -41,7 +41,7 @@ int	count_char_word(char const *s, char c)
 	return (i);
 }
 
-char	free_tabs(char **s, int j)
+static char	free_tabs(char **s, int j)
 {
 	size_t	i;
 
@@ -77,9 +77,8 @@ char	**ft_split(char const *s, char c)
 		if (s[i])
 		{
 			split[j] = ft_substr(s, i, count_char_word(&s[i], c));
-			if (free_tabs(split, j))
-				return (NULL);
-			j++;
+			if (!split[j++])
+				return (free_tabs(split, j - 1), NULL);
 		}
 		while (s[i] && s[i] != c)
 			i++;
